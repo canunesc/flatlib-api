@@ -26,7 +26,6 @@ def generate_chart():
             "Ascendant": str(chart.get("Asc").sign)
         }
         return jsonify(result)
-
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
