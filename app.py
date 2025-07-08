@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask import Flask, request, jsonify
 from flatlib.chart import Chart
 from flatlib.datetime import Datetime
@@ -14,17 +15,21 @@ def generate_chart():
     if not (date and time and location):
         return jsonify({"error": "Parâmetros necessários: date, time, location"}), 400
 
-    lat, lon = location.split(",")
-    dt = Datetime(date, time, '+00:00')
-    pos = GeoPos(lat, lon)
-    chart = Chart(dt, pos)
+    try:
+        lat, lon = location.split(",")
+        dt = Datetime(date, time, '+00:00')
+        pos = GeoPos(lat, lon)
+        chart = Chart(dt, pos)
 
-    result = {
-        "Sun": str(chart.get("Sun").sign),
-        "Moon": str(chart.get("Moon").sign),
-        "Ascendant": str(chart.get("Asc").sign)
-    }
-    return jsonify(result)
+        result = {
+            "Sun": str(chart.get("Sun").sign),
+            "Moon": str(chart.get("Moon").sign),
+            "Ascendant": str(chart.get("Asc").sign)
+        }
+        return jsonify(result)
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run()
