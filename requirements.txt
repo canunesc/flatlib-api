@@ -1,3 +1,5 @@
-flask==2.3.3
-flatlib==0.2.3
+flatlib==0.2.0
 ephem==4.1
+swisseph==2.10.00
+gunicorn==20.1.0
+flask==2.3.2
